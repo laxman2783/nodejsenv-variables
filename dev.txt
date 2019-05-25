@@ -1,0 +1,32 @@
+create a .bat file
+
+dev.bat
+
+
+SETX DB_HOST HOSTNAME
+SETX DB_USER  DBUSER
+SETX DB_PWD DBPWD
+
+environment varaibales will be created. check in  Environment variables.
+
+
+in dev.js
+
+
+const abortOnNoEnvVal = (varName) => {
+    Logger.error(`No Value set for environment variable ${varName}. Please edit ${process.env.USERPROFILE}/.s2-mdm/env.bat file to edit the values correctly and then execute the batch file to set values.`);
+
+    process.exit(1);
+};
+
+const dbConfig = {
+    host: process.env.DB_HOST || abortOnNoEnvVal('DB_HOST'),
+    port: process.env.DB_PORT || 14330,
+    dbName: process.env.DB_NAME || 'CMX_ORS',
+    user: process.env.DB_USER || abortOnNoEnvVal('DB_USER'),
+    pwd: process.env.DB_PWD || abortOnNoEnvVal('DB_PWD'),
+    poolMaxSize: process.env.DB_POOL_MAX_SIZE || 100,
+    poolMinSize: process.env.DB_POOL_MIN_SIZE || 0,
+    poolIdleTime: process.env.DB_POOL_IDLE_TIME || 200000,
+    requestTimeout: process.env.DB_REQUEST_TIMEOUT || 200000
+};
